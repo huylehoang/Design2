@@ -96,7 +96,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func twitterLogin() {
-        self.login(success: { () -> () in
+        self.login(success: {
             print("I've logged in!")
             self.loginView.isHidden = true
             self.tableView.isHidden = false

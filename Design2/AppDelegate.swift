@@ -7,15 +7,22 @@
 //
 
 import UIKit
+import BDBOAuth1Manager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var homeViewController: HomeViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        return true
+    }
+    
+    private func application(app: UIApplication, openURL url: URL, options: [String : AnyObject]) -> Bool {
+        homeViewController?.handleOpenUrl(url: url)
         return true
     }
 

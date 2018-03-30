@@ -10,8 +10,6 @@ import UIKit
 import AFNetworking
 import BDBOAuth1Manager
 
-
-
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginView: UIView!
@@ -44,6 +42,7 @@ class LoginViewController: UIViewController {
         TwitterClient.sharedInstance?.login(success: {[unowned self] in
             print("I have log in")
             self.loading()
+            
             }, failure: {(error: Error) -> () in
             print("Error: \(error.localizedDescription)")
         })     
@@ -52,26 +51,27 @@ class LoginViewController: UIViewController {
     func loading() {
 
         let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-        
+
         let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
         loadingIndicator.startAnimating();
-        
+
         alert.view.addSubview(loadingIndicator)
         present(alert, animated: true, completion: nil)
-        
+
         let when = DispatchTime.now() + 0.5
         DispatchQueue.main.asyncAfter(deadline: when){
-            
+
             loadingIndicator.stopAnimating()
+            
             alert.dismiss(animated: true, completion: nil)
-            self.performSegue(withIdentifier: "moveToHomeVC", sender: nil)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                self.performSegue(withIdentifier: "moveToHomeVC", sender: nil)
+            })
+
         }
-        
-        
-        
-        
     }
 }
 

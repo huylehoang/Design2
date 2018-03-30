@@ -30,8 +30,8 @@ class HomeViewController: UIViewController {
                              "Did you know you can tell if someone is a programmer simply by saying the word \"timezones\" and seeing if they are cringe ",
                              "We're bringing new filters to search on http://t.co/eNvqKTup1d: by videos, news, people you follow, and more. http://t.co/vkxfkNf2ou",
                              "Learn GitHub at GitHub! Checkout Patchwork, a new event for aspiring open source contributors https://t.co/eK0RshEkj8"]
-    
-    
+
+    var tweet = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +48,7 @@ class HomeViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(new))
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        
-        
+       
     }
 
     override func didReceiveMemoryWarning() {

@@ -10,27 +10,16 @@ import UIKit
 import AFNetworking
 import BDBOAuth1Manager
 
-let twitterBaseURL = URL(string: "https://api.twitter.com")
-let twitterConsumerKey = "mpRTwbf8jz9zwepXlq3pp2Y0m"
-let twitterConsumerSecrect = "rioPyS7n7JhBLcnoOorZoDPzhrdXdcnwScSBmCKuT2ajkKU8tF"
+
 
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginView: UIView!
     
     @IBOutlet weak var loginButton: UIButton!
-    
-    let twitterClient = BDBOAuth1SessionManager(
-        baseURL: twitterBaseURL!,
-        consumerKey: twitterConsumerKey,
-        consumerSecret: twitterConsumerSecrect)
-    
-    var loginSuccess: (() -> ())?
-    var loginFailure: ((Error) -> ())?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Open")
         setupLoginButton()
         
     }
@@ -42,7 +31,7 @@ class LoginViewController: UIViewController {
 
     func setupLoginButton() {
         loginButton.addTarget(self, action: #selector(twitterLogin), for: .touchUpInside)
-        loginButton.setTitle("Twitter Login", for: .normal)
+        loginButton.setTitle("Log in with Twitter", for: .normal)
         loginButton.setTitleColor(UIColor.white, for: .normal)
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
         loginButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
@@ -52,68 +41,38 @@ class LoginViewController: UIViewController {
     
     @objc func twitterLogin() {
         
-        self.login()
+        TwitterClient.sharedInstance?.login(success: {[unowned self] in
+            print("I have log in")
+            self.loading()
+            }, failure: {(error: Error) -> () in
+            print("Error: \(error.localizedDescription)")
+        })     
     }
     
-    func login(){
-//        loginSuccess = success
-        //        loginFailure = failure
+    func loading() {
+
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
         
-        twitterClient?.deauthorize()
-        twitterClient?.fetchRequestToken(
-            withPath: "oauth/request_token",
-            method: "GET",
-            callbackURL: URL(string:"design2://oauth"),
-            scope: nil,
-            success: {(requestToken: BDBOAuth1Credential!) -> Void in
-                print("I got a token!")
-                print(requestToken)
-                print(requestToken.token)
-                
-                //                if (UIApplication.shared.canOpenURL(URL(string:"twitter://")!)) {
-                //                    UIApplication.shared.openURL(URL(string:"twitter://")!)
-                //                    print("Twitter is installed")
-                //                } else
-                
-                if let url = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token!)") {
-                    print(url as Any)
-                    UIApplication.shared.openURL(url)
-                }
-                
-        }) {(error: Error!) -> Void in
-            print("error: \(error.localizedDescription)")
-            print("You failed")
-            //            self.loginFailure?(error)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+        
+        let when = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            
+            loadingIndicator.stopAnimating()
+            alert.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "moveToHomeVC", sender: nil)
         }
+        
+        
+        
+        
     }
-    
-//    func handleOpenUrl(url: URL){
-//        let requestToken = BDBOAuth1Credential(queryString: url.query)
-//        
-//        twitterClient?.fetchAccessToken(
-//            withPath: ("oauth/access_token"),
-//            method: "POST",
-//            requestToken: requestToken,
-//            success: {(accessToken: BDBOAuth1Credential!) -> Void in
-//                print("Got my access token")
-//                self.pushView()
-//                
-//                self.twitterClient?.requestSerializer.saveAccessToken(accessToken)
-//                
-//                //                self.verifyCredentials()
-//                
-//        }) {(error: Error!) -> Void in
-//            print("error: \(error.localizedDescription)")
-////            self.loginFailure?(error)
-//        }
-//    }
-    
-//    func pushView() {
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let homeViewController = storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-//        self.navigationController?.pushViewController(homeViewController, animated: true)
-//        
-//    }
 }
 
 

@@ -21,40 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        
-        let twitterBaseURL = URL(string: "https://api.twitter.com")
-        let twitterConsumerKey = "mpRTwbf8jz9zwepXlq3pp2Y0m"
-        let twitterConsumerSecrect = "rioPyS7n7JhBLcnoOorZoDPzhrdXdcnwScSBmCKuT2ajkKU8tF"
-        
-        let twitterClient = BDBOAuth1SessionManager(
-            baseURL: twitterBaseURL!,
-            consumerKey: twitterConsumerKey,
-            consumerSecret: twitterConsumerSecrect)
-
-        let requestToken = BDBOAuth1Credential(queryString: url.query)
-        
-        twitterClient?.fetchAccessToken(
-            withPath: ("oauth/access_token"),
-            method: "POST",
-            requestToken: requestToken,
-            success: {(accessToken: BDBOAuth1Credential!) -> Void in
-                
-                print("Got my access token")
-                
-                //self.twitterClient?.requestSerializer.saveAccessToken(accessToken)
-                
-                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let homeViewController = storyBoard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-                self.window?.rootViewController = UINavigationController(rootViewController: homeViewController)
-       
-                //self.verifyCredentials()
-                
-        }) {(error: Error!) -> Void in
-            print("error: \(error.localizedDescription)")
-            //self.loginFailure?(error)
-        }
-
-//        loginViewController.handleOpenUrl(url: url)
+        print(url)
+        TwitterClient.sharedInstance?.handleOpenUrl(url: url)
         return true
     }
 

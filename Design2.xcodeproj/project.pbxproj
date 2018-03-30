@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		107807D0206CDC4300490E7D /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107807CF206CDC4300490E7D /* TwitterClient.swift */; };
 		10CE6BEB206CBE3900B53D68 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CE6BEA206CBE3900B53D68 /* LoginViewController.swift */; };
 		10E4926B20569361007CB10F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4926A20569361007CB10F /* AppDelegate.swift */; };
 		10E4926D20569361007CB10F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4926C20569361007CB10F /* HomeViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		031F34F4C8ED09BA820FBAC0 /* Pods-Design2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Design2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Design2/Pods-Design2.debug.xcconfig"; sourceTree = "<group>"; };
 		07F3C664858409CA449F2C88 /* Pods-Design2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Design2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Design2/Pods-Design2.release.xcconfig"; sourceTree = "<group>"; };
+		107807CF206CDC4300490E7D /* TwitterClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		10CE6BEA206CBE3900B53D68 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		10E4926720569361007CB10F /* Design2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Design2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10E4926A20569361007CB10F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				10E4927620569361007CB10F /* Info.plist */,
 				10E4927C20569450007CB10F /* HomeTableViewCell.swift */,
 				10CE6BEA206CBE3900B53D68 /* LoginViewController.swift */,
+				107807CF206CDC4300490E7D /* TwitterClient.swift */,
 			);
 			path = Design2;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				107807D0206CDC4300490E7D /* TwitterClient.swift in Sources */,
 				10CE6BEB206CBE3900B53D68 /* LoginViewController.swift in Sources */,
 				10E4927D20569450007CB10F /* HomeTableViewCell.swift in Sources */,
 				10E4926D20569361007CB10F /* HomeViewController.swift in Sources */,

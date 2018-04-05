@@ -24,6 +24,8 @@ class TwitterClient: BDBOAuth1SessionManager {
     var loginSuccess: (() -> ())?
     var loginFailure: ((Error) -> ())?
     
+    var tweetModel = TweetModel()
+    
     func login(success: @escaping () -> (), failure: @escaping (Error) -> ()){
         loginSuccess = success
         loginFailure = failure
@@ -38,11 +40,6 @@ class TwitterClient: BDBOAuth1SessionManager {
                 print("I got a token!")
                 print(requestToken)
                 print(requestToken.token)
-                
-//                if (UIApplication.shared.canOpenURL(URL(string:"twitter://")!)) {
-//                    UIApplication.shared.openURL(URL(string:"twitter://")!)
-//                    print("Twitter is installed")
-//                } else
                 
                 if let url = URL(string: "https://api.twitter.com/oauth/authorize?oauth_token=\(requestToken.token!)") {
                     print(url as Any)
@@ -64,9 +61,15 @@ class TwitterClient: BDBOAuth1SessionManager {
             method: "POST",
             requestToken: requestToken,
             success: {(accessToken: BDBOAuth1Credential!) -> Void in
-                self.loginSuccess?()
+                
+                self.currentAccount(success: { (user) in
+                    self.loginSuccess?()
+                    self.tweetModel.saveCurrentUser(currentUser: user)
+                })
+                
                 print(accessToken.token)
                 print("Got my access token")
+                
 
         }) {(error: Error!) -> Void in
             print("error: \(error.localizedDescription)")
@@ -76,13 +79,41 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func homeTimeline(success: @escaping (_ tweets: [[String:AnyObject]]) -> ()) {
         get("1.1/statuses/home_timeline.json", parameters: nil, success: { (operation, response) in
-            
+
             let dictionaries = response as! [[String:AnyObject]]
-            
+
             success(dictionaries)
         }) { (operation, error) in
             print(error)
         }
     }
     
+    func currentAccount(success: @escaping(_ user:[User]) -> ()) {
+        get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (operation, response) in
+            let userDictionary = response as! [String:AnyObject]
+            
+            var user:[User] = []
+            let name = userDictionary["name"] as! String
+            let screenName = userDictionary["screen_name"] as! String
+            let profileURLString = userDictionary["profile_image_url_https"] as! String
+            
+            user.append(User(name: name, screenName: screenName, profileURLString: profileURLString))
+            
+            success(user)
+        }) { (operation, error) in
+            print(error)
+        }
+    }
+    
+    func logout() {
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "currentUser")
+        TwitterClient.sharedInstance?.deauthorize()
+        NotificationCenter.default.post(name: .userDidLogout, object: nil)
+    }
+    
+}
+
+extension Notification.Name {
+    static let userDidLogout = Notification.Name("UserDidLogout")
 }

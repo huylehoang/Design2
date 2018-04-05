@@ -36,14 +36,20 @@
                                                         <constraint firstAttribute="height" constant="50" id="RAn-Py-clg"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="retweeted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvO-dO-D9q">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" text="retweeted" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvO-dO-D9q">
                                                     <rect key="frame" x="73" y="4.5" width="294" height="20.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20.5" id="jOL-al-t4K"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.43529412150000002" green="0.4431372583" blue="0.47450980539999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_loop" translatesAutoresizingMaskIntoConstraints="NO" id="wE5-gD-Mxb">
                                                     <rect key="frame" x="41" y="2" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="Z1q-KU-XX7"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O98-Uf-agQ">
                                                     <rect key="frame" x="73" y="119.5" width="24" height="24"/>
@@ -101,6 +107,9 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="fav" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1e8-FE-3Ce">
                                                     <rect key="frame" x="247" y="121" width="23" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="23" id="gLt-Ms-o5S"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -132,7 +141,6 @@
                                                 <constraint firstItem="Cpg-m7-Rds" firstAttribute="leading" secondItem="7BZ-KN-85m" secondAttribute="leading" constant="15" id="IjS-GU-Dwb"/>
                                                 <constraint firstAttribute="trailing" secondItem="tZi-AV-AWC" secondAttribute="trailing" constant="23" id="R9T-Tc-ky4"/>
                                                 <constraint firstAttribute="bottom" secondItem="O98-Uf-agQ" secondAttribute="bottom" constant="10" id="STu-x7-Tl5"/>
-                                                <constraint firstItem="wE5-gD-Mxb" firstAttribute="top" secondItem="7BZ-KN-85m" secondAttribute="top" constant="2" id="Za5-00-BlR"/>
                                                 <constraint firstItem="qv8-3r-20W" firstAttribute="top" secondItem="Cpg-m7-Rds" secondAttribute="top" id="aZm-z4-bzH"/>
                                                 <constraint firstItem="EvO-dO-D9q" firstAttribute="top" secondItem="7BZ-KN-85m" secondAttribute="top" constant="4.5" id="aa2-Ot-xA2"/>
                                                 <constraint firstItem="1e8-FE-3Ce" firstAttribute="leading" secondItem="ugc-3h-qSh" secondAttribute="trailing" constant="2" id="bIG-cx-qFs"/>
@@ -152,9 +160,12 @@
                                             <outlet property="avatar" destination="Cpg-m7-Rds" id="nqK-Km-4eE"/>
                                             <outlet property="content" destination="QFT-6f-idW" id="mbh-ft-685"/>
                                             <outlet property="favouriteCount" destination="1e8-FE-3Ce" id="hAQ-is-RL2"/>
+                                            <outlet property="ic_loop" destination="wE5-gD-Mxb" id="vm8-CB-Uk5"/>
+                                            <outlet property="ic_loopHeight" destination="Z1q-KU-XX7" id="ZHO-wn-k4J"/>
                                             <outlet property="name" destination="qv8-3r-20W" id="t6b-Pq-Xas"/>
                                             <outlet property="retweetCount" destination="ius-El-Cgh" id="v3N-QL-xXJ"/>
                                             <outlet property="retweeted" destination="EvO-dO-D9q" id="9yu-xA-dRX"/>
+                                            <outlet property="retweetedHeight" destination="jOL-al-t4K" id="nLG-33-ljU"/>
                                             <outlet property="screenName" destination="ZRN-pZ-4n6" id="FoI-w2-8eg"/>
                                             <outlet property="time" destination="tZi-AV-AWC" id="wWO-tE-eNZ"/>
                                         </connections>
@@ -178,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-402.39999999999998" y="81.409295352323838"/>
+            <point key="canvasLocation" x="502" y="82"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="A0Y-vQ-snJ">
@@ -220,7 +231,7 @@
                     <connections>
                         <outlet property="loginButton" destination="bco-qi-w6S" id="OW2-su-Ktm"/>
                         <outlet property="loginView" destination="ONB-vK-4Q7" id="e13-ma-vwN"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="moveToHomeVC" id="Zng-aU-cZm"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="moveToHomeVC" id="Psj-Wb-xx0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W0R-it-LNj" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -17,6 +17,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let defaults = UserDefaults.standard
+        let savedUser = defaults.object(forKey: "currentUser") as? Data
+        
+        if savedUser != nil {
+            print("There is a current user")
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+            //window?.rootViewController = vc
+            
+            let nav = UINavigationController()
+            nav.viewControllers = [vc]
+            self.window!.rootViewController = nav
+            self.window?.makeKeyAndVisible()
+        }
+        NotificationCenter.default.addObserver(forName: Notification.Name("UserDidLogout"), object: nil, queue: OperationQueue.main) { (notification) in
+            
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyBoard.instantiateInitialViewController()
+            self.window?.rootViewController = vc
+        }
+        
         return true
     }
     

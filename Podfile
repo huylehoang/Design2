@@ -9,5 +9,7 @@ target 'Design2' do
 
   pod 'AFNetworking', '3.0.0'
   pod 'BDBOAuth1Manager', '2.0.0'
+  pod 'Alamofire', '~> 4.7.0'
+  pod 'AlamofireImage', '~> 3.3.0'
 
 end

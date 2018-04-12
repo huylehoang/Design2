@@ -47,9 +47,9 @@ class PostTableViewCell: UITableViewCell {
         super.didMoveToSuperview()
         setupAvatar()
         setupTextView()
+        
     }
 
-    
     func setupAvatar() {
         
         // Circle avatar
@@ -71,11 +71,30 @@ class PostTableViewCell: UITableViewCell {
     }
     
     func setupTextView() {
+        postTextView.delegate = self
         postTextView.font = UIFont.systemFont(ofSize: 16.0)
         postTextView.placeholder = "What is happening?"
-        postTextView.attributedText = realText
-        postTextView.delegate = self
+        if postTextView.attributedText != nil {
+            parentVC.isEdit = true
+            let postTextViewString = postTextView.attributedText.string
+            parentVC.postText = postTextViewString
+            addAttr(textView: postTextView)
+        }
         postTextView.becomeFirstResponder()
+    }
+    
+    func addAttr(textView: KMPlaceholderTextView!) {
+        let attributedString = NSMutableAttributedString(string: textView.text)
+        let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
+        attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, textView.text.count))
+        if textView.text.count > 150 {
+            let errorAttribute = [ NSAttributedStringKey.backgroundColor: self.errorColor,
+                                   NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
+            attributedString.addAttributes(errorAttribute, range: NSMakeRange(150, textView.text.count - 150))
+            textView.attributedText = attributedString
+        } else {
+            textView.attributedText = attributedString
+        }
     }
 }
 
@@ -95,21 +114,8 @@ extension PostTableViewCell: UITextViewDelegate {
         } else {
             parentVC.isEdit = true
         }
-
-        let attributedString = NSMutableAttributedString(string: textView.text)
-        let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
-        attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, textView.text.count))
-        //self.realText = attributedString
-
-        if textView.text.count > 150 {
-            let errorAttribute = [ NSAttributedStringKey.backgroundColor: errorColor,
-                                   NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
-            attributedString.addAttributes(errorAttribute, range: NSMakeRange(150, textView.text.count - 150))
-            self.postTextView.attributedText = attributedString
-
-        } else {
-            self.postTextView.attributedText = attributedString
-        }
+        
+        addAttr(textView: textView as! KMPlaceholderTextView)
         
 //        if words.count > 2 {
 //            let errorAttribute = [ NSAttributedStringKey.backgroundColor: errorColor,
@@ -136,7 +142,7 @@ extension PostTableViewCell: TweetModelDelegate {
         let attributedString = NSMutableAttributedString(string: currentStatus)
         let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
         attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, currentStatus.count))
-        self.realText = attributedString
+        self.postTextView.attributedText = attributedString
         //self.layoutSubviews()
     }
 }

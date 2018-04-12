@@ -17,6 +17,8 @@ class HomeViewController: UIViewController {
     
     var tweetModel = TweetModel()
     
+    var timer = Timer()
+    
     //let slideAnimator = SlideAnimator()
     
     override func viewDidLoad() {
@@ -41,7 +43,43 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tweetModel.fetchTweet()
+        timer.invalidate()
+
+        timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
+    
+    
+    @objc func timerAction() {
+        loading()
+    }
+    
+    func loading() {
+        
+        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+        
+        let when = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: when){
+            
+            loadingIndicator.stopAnimating()
+            
+            alert.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                DispatchQueue.main.async {
+                    self.tweetModel.fetchTweet()
+                    print("Loaded")
+                }
+            })
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

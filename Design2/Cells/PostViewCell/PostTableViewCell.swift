@@ -74,7 +74,9 @@ class PostTableViewCell: UITableViewCell {
         postTextView.delegate = self
         postTextView.font = UIFont.systemFont(ofSize: 16.0)
         postTextView.placeholder = "What is happening?"
-        if postTextView.attributedText != nil {
+        if postTextView.attributedText == NSMutableAttributedString(string: "") {
+            parentVC.isEdit = false
+        } else {
             parentVC.isEdit = true
             let postTextViewString = postTextView.attributedText.string
             parentVC.postText = postTextViewString

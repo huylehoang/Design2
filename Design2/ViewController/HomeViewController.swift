@@ -29,7 +29,6 @@ class HomeViewController: UIViewController {
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 130
-
         
         navigationItem.title = "Home"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
@@ -47,8 +46,7 @@ class HomeViewController: UIViewController {
 
         timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
-    
-    
+
     @objc func timerAction() {
         loading()
     }

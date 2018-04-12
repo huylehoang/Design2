@@ -100,8 +100,7 @@ extension PostTableViewCell: UITextViewDelegate {
         let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
         attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, textView.text.count))
         //self.realText = attributedString
-        
-        print(textView.text.components(separatedBy: " "))
+
         if textView.text.count > 150 {
             let errorAttribute = [ NSAttributedStringKey.backgroundColor: errorColor,
                                    NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]

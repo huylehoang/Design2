@@ -76,7 +76,8 @@ class PostViewController: UIViewController {
         isEdit = false
         lineBreak.isHidden = true
         countLabel.textColor = normalColor
-        countLabel.text = "Character: \(characterCount)"
+        //countLabel.text = "Character: \(characterCount)"
+        countLabel.text = "Character: 150"
         wordCountLabel.textColor = normalColor
         wordCountLabel.text = "Word: \(wordCount)"
         setupCancelImage()
@@ -181,12 +182,14 @@ class PostViewController: UIViewController {
     func checkCharacterLimit() {
         if characterCount >= 0 && characterCount <= 150 {
             countLabel.textColor = normalColor
-            countLabel.text = "Characer: \(characterCount)"
+            //countLabel.text = "Characer: \(characterCount)"
+            countLabel.text = "Character: \(150 - characterCount)"
             wordCountLabel.textColor = normalColor
             wordCountLabel.text = "Word: \(wordCount)"
         } else if characterCount > 150 {
             countLabel.textColor = errorColor
             countLabel.text = "Character: \(characterCount)(-\(characterCount - 150))"
+            //countLabel.text = "Character: -\(characterCount - 150)"
             wordCountLabel.textColor = errorColor
             wordCountLabel.text = "Word: \(wordCount)"
         }

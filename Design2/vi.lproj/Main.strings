@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "fav"; ObjectID = "1e8-FE-3Ce"; */
+"1e8-FE-3Ce.text" = "fav";
+
+/* Class = "UILabel"; text = "retweeted"; ObjectID = "EvO-dO-D9q"; */
+"EvO-dO-D9q.text" = "chao";
+
+/* Class = "UILabel"; text = "content"; ObjectID = "QFT-6f-idW"; */
+"QFT-6f-idW.text" = "content";
+
+/* Class = "UILabel"; text = "@name"; ObjectID = "ZRN-pZ-4n6"; */
+"ZRN-pZ-4n6.text" = "@name";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "bco-qi-w6S"; */
+"bco-qi-w6S.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "ret"; ObjectID = "ius-El-Cgh"; */
+"ius-El-Cgh.text" = "ret";
+
+/* Class = "UILabel"; text = "name"; ObjectID = "qv8-3r-20W"; */
+"qv8-3r-20W.text" = "name";
+
+/* Class = "UILabel"; text = "time"; ObjectID = "tZi-AV-AWC"; */
+"tZi-AV-AWC.text" = "time";

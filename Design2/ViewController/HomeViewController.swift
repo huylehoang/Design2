@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HomeViewController: UIViewController {
 
@@ -15,6 +16,8 @@ class HomeViewController: UIViewController {
     var tweetArray:[Tweet] = []
     
     var tweetModel = TweetModel()
+    
+    //let slideAnimator = SlideAnimator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +32,15 @@ class HomeViewController: UIViewController {
         navigationItem.title = "Home"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(signOut))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(new))
-        navigationController?.navigationBar.barTintColor = UIColor(red: 46/255.0, green: 183/255.0, blue: 255/255.0, alpha: 1)
+        //navigationController?.navigationBar.barTintColor = UIColor(red: 46/255.0, green: 183/255.0, blue: 255/255.0, alpha: 1)
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        
-        tweetModel.tweetDelegate = self
+        tweetModel.tweetDelegate = self  
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tweetModel.fetchTweet()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,15 +60,25 @@ class HomeViewController: UIViewController {
     }
     
     @objc func new() {
-        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let postVC = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+        present(postVC, animated: true, completion: nil)
     }
 
 }
 
 extension HomeViewController: TweetModelDelegate {
+    func didReceiveCurrentUser(currentUser: [User]) {
+        print("DID RECEIVE CURRENT USER")
+    }
+    
     func didReceiveTweet(tweetArray: [Tweet]) {
         self.tweetArray = tweetArray
         self.tableView.reloadData()
+    }
+    
+    func didReceiveCurrentStatus(currentStatus: String) {
+        print("DID RECEIVE CURRENT STATUS")
     }
 }
 
@@ -86,6 +101,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 }
+
 
 
 

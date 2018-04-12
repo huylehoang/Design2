@@ -9,6 +9,7 @@
 import Foundation
 import AFNetworking
 import BDBOAuth1Manager
+import Alamofire
 
 let twitterBaseURL = URL(string: "https://api.twitter.com")
 let twitterConsumerKey = "mpRTwbf8jz9zwepXlq3pp2Y0m"
@@ -78,7 +79,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     }
     
     func homeTimeline(success: @escaping (_ tweets: [[String:AnyObject]]) -> ()) {
-        get("1.1/statuses/home_timeline.json", parameters: nil, success: { (operation, response) in
+        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (operation, response) in
 
             let dictionaries = response as! [[String:AnyObject]]
 
@@ -86,6 +87,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (operation, error) in
             print(error)
         }
+    
     }
     
     func currentAccount(success: @escaping(_ user:[User]) -> ()) {
@@ -110,6 +112,15 @@ class TwitterClient: BDBOAuth1SessionManager {
         defaults.removeObject(forKey: "currentUser")
         TwitterClient.sharedInstance?.deauthorize()
         NotificationCenter.default.post(name: .userDidLogout, object: nil)
+    }
+    
+    func postTweet(text: String, success: () -> ()){
+        post("1.1/statuses/update.json?status=" + text, parameters: nil, progress: nil, success: {(operation, response) -> Void in
+            print("you posted a tweet")
+            
+        }) { (operation, error) in
+            print(error)
+        }
     }
     
 }

@@ -23,11 +23,16 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var favouriteCount: UILabel!
     
     @IBOutlet weak var retweetedHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var ic_loopHeight: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        avatar.layer.borderWidth = 1
+        avatar.layer.masksToBounds = false
+        avatar.layer.borderColor = UIColor.clear.cgColor
+        avatar.layer.cornerRadius = avatar.frame.height/2
+        avatar.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

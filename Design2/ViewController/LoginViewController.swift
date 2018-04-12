@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
         loginButton.setTitleColor(UIColor.white, for: .normal)
         loginButton.titleLabel?.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
         loginButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        loginButton.backgroundColor = UIColor(red: 0/255.0, green: 132.0/255.0, blue: 180.0/255.0, alpha: 1)
+        loginButton.backgroundColor = UIColor(red: 29/255.0, green: 202/255.0, blue: 255/255.0, alpha: 1)
         
     }
     
@@ -68,11 +68,12 @@ class LoginViewController: UIViewController {
             alert.dismiss(animated: true, completion: nil)
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.performSegue(withIdentifier: "moveToHomeVC", sender: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let homeVC = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+                self.navigationController?.pushViewController(homeVC, animated: false)
+                //self.performSegue(withIdentifier: "moveToHomeVC", sender: nil)
             })
 
         }
     }
 }
-
-

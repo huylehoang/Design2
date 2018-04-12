@@ -15,23 +15,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
+    //let slideAnimator = SlideAnimator()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let defaults = UserDefaults.standard
         let savedUser = defaults.object(forKey: "currentUser") as? Data
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nav = storyboard.instantiateViewController(withIdentifier: "TwitterNavigationController") as! UINavigationController
+        //nav.transitioningDelegate = slideAnimator
+        let postVC = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
+        nav.viewControllers = [postVC]
         
         if savedUser != nil {
             print("There is a current user")
+        
+            let vc = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
             
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
             //window?.rootViewController = vc
             
-            let nav = UINavigationController()
+            //let nav = UINavigationController()
             nav.viewControllers = [vc]
             self.window!.rootViewController = nav
             self.window?.makeKeyAndVisible()
+
+        } else {
+            print("There is no current user.\nPlease log in")
         }
         NotificationCenter.default.addObserver(forName: Notification.Name("UserDidLogout"), object: nil, queue: OperationQueue.main) { (notification) in
             

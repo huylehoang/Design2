@@ -23,11 +23,26 @@ class HomeViewController: UIViewController {
     
     var lastContentOffset: CGFloat = 0
     
+    var refreshControl = UIRefreshControl()
+    
+    var isAvailable = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.dataSource = self
         tableView.delegate = self
+        isAvailable = false
+        
+        // Check avalable version to use refresh control
+        if #available(iOS 10.0, *) {
+            isAvailable = true
+            tableView.refreshControl = self.refreshControl
+        } else {
+            isAvailable = false
+        }
+        
+        self.refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 130
@@ -47,6 +62,14 @@ class HomeViewController: UIViewController {
         timer.invalidate()
 
         timer = Timer.scheduledTimer(timeInterval: 600, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    }
+    
+    @objc func didRefresh() {
+        DispatchQueue.main.async {
+            self.tweetModel.fetchTweet()
+            print("Reloaded")
+        }
+        self.refreshControl.endRefreshing()
     }
 
     @objc func timerAction() {
@@ -141,16 +164,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension HomeViewController: UIScrollViewDelegate {
-    
+
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.lastContentOffset = tableView.contentOffset.y
     }
-    
+
     // Scrolling down to refresh table view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y <= -110.0 {
-            print(scrollView.contentOffset.y)
-            self.loading()
+        if isAvailable == false {
+            if scrollView.contentOffset.y <= -90.0 {
+                print(scrollView.contentOffset.y)
+                self.loading()
+            }
+        } else {
+            if self.lastContentOffset < scrollView.contentOffset.y {
+                print("Scrolling up")
+            }
         }
     }
 }

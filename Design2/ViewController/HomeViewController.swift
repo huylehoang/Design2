@@ -38,12 +38,11 @@ class HomeViewController: UIViewController {
         if #available(iOS 10.0, *) {
             isAvailable = true
             tableView.refreshControl = self.refreshControl
+            self.refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
         } else {
             isAvailable = false
         }
-        
-        self.refreshControl.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
-        
+
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 130
         
@@ -59,6 +58,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tweetModel.fetchTweet()
+        
+        //Refresh table view after every 10 minutes
         timer.invalidate()
 
         timer = Timer.scheduledTimer(timeInterval: 600, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)

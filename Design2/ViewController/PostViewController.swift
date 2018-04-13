@@ -75,11 +75,12 @@ class PostViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         isEdit = false
         lineBreak.isHidden = true
-        countLabel.textColor = normalColor
+//        countLabel.textColor = normalColor
         //countLabel.text = "Character: \(characterCount)"
-        countLabel.text = "Character: 150"
-        wordCountLabel.textColor = normalColor
-        wordCountLabel.text = "Word: \(wordCount)"
+//        countLabel.text = "Character: 150"
+//        wordCountLabel.textColor = normalColor
+//        wordCountLabel.text = "Word: \(wordCount)"
+        checkCharacterLimit()
         setupCancelImage()
         setupTweetButton()
         setupTableView()

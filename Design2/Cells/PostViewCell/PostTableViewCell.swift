@@ -80,23 +80,10 @@ class PostTableViewCell: UITableViewCell {
             parentVC.isEdit = true
             let postTextViewString = postTextView.attributedText.string
             parentVC.postText = postTextViewString
+            countWordsAndChars(text: postTextViewString)
             addAttr(textView: postTextView)
         }
         postTextView.becomeFirstResponder()
-    }
-    
-    func addAttr(textView: KMPlaceholderTextView!) {
-        let attributedString = NSMutableAttributedString(string: textView.text)
-        let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
-        attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, textView.text.count))
-        if textView.text.count > 150 {
-            let errorAttribute = [ NSAttributedStringKey.backgroundColor: self.errorColor,
-                                   NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
-            attributedString.addAttributes(errorAttribute, range: NSMakeRange(150, textView.text.count - 150))
-            textView.attributedText = attributedString
-        } else {
-            textView.attributedText = attributedString
-        }
     }
 }
 
@@ -105,12 +92,8 @@ extension PostTableViewCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         
         parentVC.postText = textView.text
-        parentVC.characterCount = textView.text.count
-        let chararacterSet = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
-        let components = textView.text.components(separatedBy: chararacterSet)
-        let words = components.filter { !$0.isEmpty }
-        parentVC.wordCount = words.count
-     
+        countWordsAndChars(text: textView.text)
+        
         if textView.text == "" {
             parentVC.isEdit = false
         } else {
@@ -146,5 +129,30 @@ extension PostTableViewCell: TweetModelDelegate {
         attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, currentStatus.count))
         self.postTextView.attributedText = attributedString
         //self.layoutSubviews()
+    }
+}
+
+extension PostTableViewCell {
+    func addAttr(textView: KMPlaceholderTextView!) {
+        let attributedString = NSMutableAttributedString(string: textView.text)
+        let normalAttributes = [ NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
+        attributedString.addAttributes(normalAttributes, range: NSMakeRange(0, textView.text.count))
+        if textView.text.count > 150 {
+            let errorAttribute = [ NSAttributedStringKey.backgroundColor: self.errorColor,
+                                   NSAttributedStringKey.font : UIFont.systemFont(ofSize: 16.0, weight: .light) ]
+            attributedString.addAttributes(errorAttribute, range: NSMakeRange(150, textView.text.count - 150))
+            textView.attributedText = attributedString
+        } else {
+            textView.attributedText = attributedString
+        }
+    }
+    
+    func countWordsAndChars(text: String) {
+        parentVC.characterCount = text.count
+        
+        let chararacterSet = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
+        let components = text.components(separatedBy: chararacterSet)
+        let words = components.filter { !$0.isEmpty }
+        parentVC.wordCount = words.count
     }
 }

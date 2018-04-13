@@ -79,8 +79,7 @@ class PostTableViewCell: UITableViewCell {
         } else {
             parentVC.isEdit = true
             let postTextViewString = postTextView.attributedText.string
-            parentVC.postText = postTextViewString
-            countWordsAndChars(text: postTextViewString)
+            setupParentVC(text: postTextViewString)
             addAttr(textView: postTextView)
         }
         postTextView.becomeFirstResponder()
@@ -91,8 +90,7 @@ extension PostTableViewCell: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-        parentVC.postText = textView.text
-        countWordsAndChars(text: textView.text)
+        setupParentVC(text: textView.text)
         
         if textView.text == "" {
             parentVC.isEdit = false
@@ -147,7 +145,8 @@ extension PostTableViewCell {
         }
     }
     
-    func countWordsAndChars(text: String) {
+    func setupParentVC(text: String) {
+        parentVC.postText = text
         parentVC.characterCount = text.count
         
         let chararacterSet = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)

@@ -71,12 +71,12 @@ class HomeViewController: UIViewController {
             loadingIndicator.stopAnimating()
             
             alert.dismiss(animated: true, completion: nil)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
                 DispatchQueue.main.async {
                     self.tweetModel.fetchTweet()
                     print("Loaded")
                 }
-            })
+            //})
         }
     }
     

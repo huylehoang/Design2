@@ -21,6 +21,8 @@ class HomeViewController: UIViewController {
     
     //let slideAnimator = SlideAnimator()
     
+    var lastContentOffset: CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +46,7 @@ class HomeViewController: UIViewController {
         tweetModel.fetchTweet()
         timer.invalidate()
 
-        timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 600, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     }
 
     @objc func timerAction() {
@@ -135,6 +137,21 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                      retweetCount: self.tweetArray[indexPath.row].retweetCount,
                      favouriteCount: self.tweetArray[indexPath.row].favouriteCount)
         return cell
+    }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.lastContentOffset = tableView.contentOffset.y
+    }
+    
+    // Scrolling down to refresh table view
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y <= -110.0 {
+            print(scrollView.contentOffset.y)
+            self.loading()
+        }
     }
 }
 
